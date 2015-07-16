@@ -17,7 +17,6 @@ class ProjectHelper:
                 wd.find_element_by_xpath("//a[contains(@href,'/mantisbt-1.2.19/manage_overview_page.php')]").click()
                 wd.find_element_by_xpath("//a[contains(@href,'/mantisbt-1.2.19/manage_proj_page.php')]").click()
 
-
     def change_field_value(self, field_name, text):
         wd = self.app.wd
         if text is not None:
@@ -37,7 +36,6 @@ class ProjectHelper:
             checkbox = wd.find_element_by_name(checkbox_name)
             if not bool:
                 checkbox.click()
-
 
     def fill_project_form(self, project):
         wd = self.app.wd
@@ -79,3 +77,40 @@ class ProjectHelper:
                         Project(name=name, status=status, id=id, enabled=enabled,
                             view_status=view_status, description=description))
         return list(self.project_cash)
+
+    def select_project_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//a[contains(@href,'manage_proj_edit_page.php?project_id=%s')]" % id).click()
+
+    def delete_project_by_id(self, id):
+        wd = self.app.wd
+        self.open_manage_proj_page()
+        self.select_project_by_id(id)
+        # submit deletion
+        wd.find_element_by_xpath("//input[@value='Delete Project']").click()
+        wd.find_element_by_xpath("//input[@value='Delete Project']").click()
+        self.project_cash = None
+
+
+    def check_add_new_project_success(self, old_project_list, project):
+        old_project_list.append(project)
+        new_project_list = self.get_project_list()
+        self.compare_contact_lists(new_project_list, old_project_list) #, check_ui)
+
+    def check_delete_success(self, project, old_project_list):
+        old_project_list.remove(project)
+        new_project_list = self.get_project_list()
+        self.compare_contact_lists(new_project_list, old_project_list) #, check_ui)
+
+    def compare_contact_lists(self, new_contacts, old_contacts): #, check_ui):
+        wd = self.app.wd
+        assert sorted(old_contacts, key=Project.id_or_max) == sorted(new_contacts, key=Project.id_or_max)
+        #if check_ui:
+            #db_contacts = list(map(lambda contact: Contact(id=contact.id, firstname=contact.firstname, lastname=contact.lastname,
+                                        #address=contact.address,
+                                        #all_phones_from_home_page=self.merge_phones_like_on_home_page(contact),
+                                        #homephone=None, workphone=None, mobilephone=None, secondaryphone=None,
+                                        #all_emails_from_home_page=self.merge_emails_like_on_home_page(contact),
+                                        #email_1=None, email_2=None, email_3=None), new_contacts))
+            #assert sorted(list(map(self.clean, self.get_contact_list_all())), key=Contact.id_or_max) == \
+               #sorted(list(map(self.clean, db_contacts)), key=Contact.id_or_max)

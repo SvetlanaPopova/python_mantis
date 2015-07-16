@@ -21,9 +21,8 @@ class Project:
         return (self.id is None or other.id is None or self.id == other.id) \
                and self.name == other.name \
                and self.status == other.status \
-               and self.inherit_gl_categories == other.inherit_gl_categories \
                and self.view_status == other.view_status\
-               and self.description == other.description
+               and self.description == other.description #and self.inherit_gl_categories == other.inherit_gl_categories \
 
     def id_or_max(self):
         if self.id:
