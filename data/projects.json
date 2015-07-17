@@ -1,0 +1,32 @@
+[
+  {
+    "name": "ProjectrJXtFaH7Hk",
+    "description": "DescriptionxwaPnYSJvIEanoY iWdJIfnFT13",
+    "status": "stable",
+    "view_status": "public",
+    "py/object": "model.project.Project",
+    "id": null,
+    "inherit_gl_categories": false,
+    "enabled": null
+  },
+  {
+    "name": "ProjectWYV j1f9PXHR ",
+    "description": "DescriptionZItVdFMaFEVEHZBgNHdn2oe eqpmbEhf",
+    "status": "stable",
+    "view_status": "public",
+    "py/object": "model.project.Project",
+    "id": null,
+    "inherit_gl_categories": false,
+    "enabled": null
+  },
+  {
+    "name": "ProjectEKpuGVITx WwhDIe",
+    "description": "DescriptionQvktc4aZxkzouhwanuFiuFvepD73DEXkpCwI tBH8ySPF",
+    "status": "stable",
+    "view_status": "public",
+    "py/object": "model.project.Project",
+    "id": null,
+    "inherit_gl_categories": true,
+    "enabled": null
+  }
+]
