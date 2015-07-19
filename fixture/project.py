@@ -92,25 +92,25 @@ class ProjectHelper:
         self.project_cash = None
 
 
-    def check_add_new_project_success(self, old_project_list, project):
+    def check_add_new_project_success(self, orm, old_project_list, project, check_ui):
         old_project_list.append(project)
-        new_project_list = self.get_project_list()
-        self.compare_contact_lists(new_project_list, old_project_list) #, check_ui)
+        new_project_list = orm.get_project_list()
+        self.compare_contact_lists(new_project_list, old_project_list, check_ui)
 
-    def check_delete_success(self, project, old_project_list):
+    def check_delete_success(self, orm, project, old_project_list, check_ui):
         old_project_list.remove(project)
-        new_project_list = self.get_project_list()
-        self.compare_contact_lists(new_project_list, old_project_list) #, check_ui)
+        new_project_list = orm.get_project_list()
+        self.compare_contact_lists(new_project_list, old_project_list, check_ui)
 
-    def compare_contact_lists(self, new_contacts, old_contacts): #, check_ui):
+    def compare_contact_lists(self, new_project_list, old_project_list, check_ui):
         wd = self.app.wd
-        assert sorted(old_contacts, key=Project.id_or_max) == sorted(new_contacts, key=Project.id_or_max)
-        #if check_ui:
-            #db_contacts = list(map(lambda contact: Contact(id=contact.id, firstname=contact.firstname, lastname=contact.lastname,
-                                        #address=contact.address,
-                                        #all_phones_from_home_page=self.merge_phones_like_on_home_page(contact),
-                                        #homephone=None, workphone=None, mobilephone=None, secondaryphone=None,
-                                        #all_emails_from_home_page=self.merge_emails_like_on_home_page(contact),
-                                        #email_1=None, email_2=None, email_3=None), new_contacts))
-            #assert sorted(list(map(self.clean, self.get_contact_list_all())), key=Contact.id_or_max) == \
-               #sorted(list(map(self.clean, db_contacts)), key=Contact.id_or_max)
+        assert sorted(old_project_list, key=Project.id_or_max) == sorted(new_project_list, key=Project.id_or_max)
+        if check_ui:
+            list_ui = self.get_project_list()
+            assert sorted(list(map(self.clean, list_ui)), key=Project.id_or_max) == \
+               sorted(list(map(self.clean, new_project_list)), key=Project.id_or_max)
+
+    def clean(self, project):
+        return Project(id=project.id, name=project.name.strip(),
+                   status=project.status, view_status=project.view_status,
+                   description=project.description.strip(), enabled=project.enabled)
