@@ -16,7 +16,7 @@ except getopt.GetoptError as err:
         getopt.usage()
         sys.exit(2)
 
-n = 1
+n = 2
 f = "data/projects.json"
 
 for o, a in opts:
@@ -32,8 +32,8 @@ def random_string (prefix, maxlen):
 
 
 testdata = [Project(name=random_string("Project", 20), status=random.choice(["stable", "development", "release", "obsolete"]),
-            view_status=random.choice(["public", "private"]), description=random_string("Description", 60),
-            inherit_gl_categories=random.choice([True, False]), enabled="X")
+            view_status=random.choice(["public", "private"]), description=random_string("Description", 60)
+            , enabled="X") #inherit_gl_categories=random.choice([True, False])
     for i in range(n)
 ]
 

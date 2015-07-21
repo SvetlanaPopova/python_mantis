@@ -10,12 +10,7 @@ class ProjectHelper:
 
     def open_manage_proj_page(self):
         wd = self.app.wd
-        if not(wd.current_url.endswith("manage_proj_page.php") and len(wd.find_elements_by_name("manage_proj_create_page_token"))>0):
-            if len(wd.find_elements_by_xpath("//a[contains(@href,'/mantisbt-1.2.19/manage_proj_page.php')]"))>0:
-                wd.find_element_by_xpath("//a[contains(@href,'/mantisbt-1.2.19/manage_proj_page.php')]").click()
-            else:
-                wd.find_element_by_xpath("//a[contains(@href,'/mantisbt-1.2.19/manage_overview_page.php')]").click()
-                wd.find_element_by_xpath("//a[contains(@href,'/mantisbt-1.2.19/manage_proj_page.php')]").click()
+        wd.get(self.app.base_url + "/manage_proj_page.php")
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
